@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.navigation-mf-list {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
