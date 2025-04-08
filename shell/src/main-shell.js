@@ -16,6 +16,7 @@ const NAVIGATION = [
 ];
 
 const $navigationMf = document.querySelector("#mf-navigation");
+const $targetMf = document.querySelector("#mf-target");
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("main-shell.js loaded.");
@@ -26,4 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
       "*",
     );
   });
+});
+
+window.addEventListener("message", (event) => {
+  if (event.data.type === "NAVIGATE") {
+    if (!event.data.payload.source) {
+      console.error("Invalid source URL");
+      return;
+    }
+
+    $targetMf.src = event.data.payload.source;
+  }
 });

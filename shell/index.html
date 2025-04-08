@@ -5,10 +5,16 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Receipt Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
     <div id="mf-shell">
-      <iframe id="mf-navigation" src="http://localhost:3001"></iframe>
+      <iframe
+        id="mf-navigation"
+        class="mf-shell-navigation"
+        src="http://localhost:3001"
+      ></iframe>
+      <iframe id="mf-target" class="mf-shell-target"></iframe>
     </div>
     <script type="module" src="/src/main-shell.js"></script>
   </body>

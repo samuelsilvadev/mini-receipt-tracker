@@ -42,3 +42,11 @@ iframe {
   border: none;
   width: 100%;
 }
+
+.mf-shell-navigation {
+  height: 64px;
+}
+
+.mf-shell-target {
+  height: 100%;
+}
