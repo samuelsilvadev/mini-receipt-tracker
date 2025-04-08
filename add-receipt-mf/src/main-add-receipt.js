@@ -1,9 +1,9 @@
-const $form = document.getElementById('add-receipt-form');
-const $submit = document.getElementById('add-receipt-form-submit');
+const $form = document.getElementById("add-receipt-form");
+const $submit = document.getElementById("add-receipt-form-submit");
 
 $form.addEventListener("submit", (event) => {
-  $submit.setAttribute("disabled", true)
-  event.preventDefault()
+  $submit.setAttribute("disabled", true);
+  event.preventDefault();
 
   const formData = new FormData($form);
 
@@ -15,7 +15,10 @@ $form.addEventListener("submit", (event) => {
     return;
   }
 
-  window.parent.postMessage({type: "REGISTER_RECEIPT", payload: {name, price, date}}, "*")
-  $form.reset()
-  $submit.removeAttribute("disabled")
-})
+  window.parent.postMessage(
+    { type: "REGISTER_RECEIPT", payload: { name, price, date } },
+    "*",
+  );
+  $form.reset();
+  $submit.removeAttribute("disabled");
+});

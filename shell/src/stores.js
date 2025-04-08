@@ -1,7 +1,7 @@
 export class ReceiptsStore {
-  #allowedTypes = ["REGISTER_RECEIPT"]
-  data = []
-  events = new Map()
+  #allowedTypes = ["REGISTER_RECEIPT"];
+  data = [];
+  events = new Map();
 
   register(event, callback) {
     if (!this.#allowedTypes.includes(event)) {
@@ -18,11 +18,11 @@ export class ReceiptsStore {
   activate() {
     window.addEventListener("message", (event) => {
       if (event.data.type === "REGISTER_RECEIPT") {
-        this.data.push(event.data.payload)
+        this.data.push(event.data.payload);
 
         console.log("Receipt added:", event.data.payload);
 
-        const listeners = this.events.get("REGISTER_RECEIPT")
+        const listeners = this.events.get("REGISTER_RECEIPT");
 
         listeners?.forEach((listener) => listener(event.data.payload));
       }

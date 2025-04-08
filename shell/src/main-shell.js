@@ -19,9 +19,7 @@ const NAVIGATION = [
   },
 ];
 
-const LOADERS_PER_ROUTE = new Map([
-  ["/", () => receiptsStore.receipts],
-]);
+const LOADERS_PER_ROUTE = new Map([["/", () => receiptsStore.receipts]]);
 
 const $navigationMf = document.querySelector("#mf-navigation");
 const $targetMf = document.querySelector("#mf-target");
@@ -36,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  receiptsStore.activate()
+  receiptsStore.activate();
   loadMFEByPathname();
 });
 
@@ -55,7 +53,7 @@ window.addEventListener("message", (event) => {
 });
 
 window.addEventListener("popstate", () => {
-  loadMFEByPathname()
+  loadMFEByPathname();
 });
 
 function getCurrentRoute() {
@@ -67,15 +65,14 @@ function getCurrentRoute() {
 function loadMFEByPathname() {
   const currentRoute = getCurrentRoute();
 
-
   if (currentRoute) {
     $targetMf.src = currentRoute.source;
 
     if (!LOADERS_PER_ROUTE.has(currentRoute.url)) {
-      return
+      return;
     }
 
-    const loader = LOADERS_PER_ROUTE.get(currentRoute.url)
+    const loader = LOADERS_PER_ROUTE.get(currentRoute.url);
 
     $targetMf.addEventListener("load", function () {
       this.contentWindow.postMessage(
