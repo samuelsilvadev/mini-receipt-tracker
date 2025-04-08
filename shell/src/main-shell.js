@@ -36,6 +36,18 @@ window.addEventListener("message", (event) => {
       return;
     }
 
-    $targetMf.src = event.data.payload.source;
+    const { source, url } = event.data.payload;
+
+    $targetMf.src = source;
+    window.history.pushState({}, "", url);
+  }
+});
+
+window.addEventListener("popstate", () => {
+  const currentPathname = location.pathname;
+  const previousRoute = NAVIGATION.find(({ url }) => url === currentPathname);
+
+  if (previousRoute) {
+    $targetMf.src = previousRoute.source;
   }
 });
