@@ -1,16 +1,10 @@
 import "./style.css";
+import { ReceiptsStore } from "./stores";
+import { Routes } from "./routes";
 
 console.log("main-shell.js running.");
 
-class Routes {
-  static push(url) {
-    window.history.pushState({}, "", url);
-  }
-
-  static replace(url) {
-    window.history.replaceState({}, "", url);
-  }
-}
+const receiptsStore = new ReceiptsStore();
 
 const NAVIGATION = [
   {
@@ -25,6 +19,10 @@ const NAVIGATION = [
   },
 ];
 
+const LOADERS_PER_ROUTE = new Map([
+  ["/", () => receiptsStore.receipts],
+]);
+
 const $navigationMf = document.querySelector("#mf-navigation");
 const $targetMf = document.querySelector("#mf-target");
 
@@ -38,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  receiptsStore.activate()
   loadMFEByPathname();
 });
 
@@ -68,7 +67,21 @@ function getCurrentRoute() {
 function loadMFEByPathname() {
   const currentRoute = getCurrentRoute();
 
+
   if (currentRoute) {
     $targetMf.src = currentRoute.source;
+
+    if (!LOADERS_PER_ROUTE.has(currentRoute.url)) {
+      return
+    }
+
+    const loader = LOADERS_PER_ROUTE.get(currentRoute.url)
+
+    $targetMf.addEventListener("load", function () {
+      this.contentWindow.postMessage(
+        { type: "LOAD_ROUTE", payload: loader() },
+        "*",
+      );
+    });
   }
 }
