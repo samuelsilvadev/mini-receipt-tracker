@@ -38,7 +38,6 @@ function render(data = []) {
     $li.appendChild($a);
     $list.appendChild($li);
   });
-
 }
 
 function sendNavigation(data) {
