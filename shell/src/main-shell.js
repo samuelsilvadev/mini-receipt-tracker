@@ -2,6 +2,16 @@ import "./style.css";
 
 console.log("main-shell.js running.");
 
+class Routes {
+  static push(url) {
+    window.history.pushState({}, "", url);
+  }
+
+  static replace(url) {
+    window.history.replaceState({}, "", url);
+  }
+}
+
 const NAVIGATION = [
   {
     url: "/",
@@ -27,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "*",
     );
   });
+
+  loadMFEByPathname();
 });
 
 window.addEventListener("message", (event) => {
@@ -39,15 +51,24 @@ window.addEventListener("message", (event) => {
     const { source, url } = event.data.payload;
 
     $targetMf.src = source;
-    window.history.pushState({}, "", url);
+    Routes.push(url);
   }
 });
 
 window.addEventListener("popstate", () => {
-  const currentPathname = location.pathname;
-  const previousRoute = NAVIGATION.find(({ url }) => url === currentPathname);
-
-  if (previousRoute) {
-    $targetMf.src = previousRoute.source;
-  }
+  loadMFEByPathname()
 });
+
+function getCurrentRoute() {
+  const currentPathname = window.location.pathname;
+
+  return NAVIGATION.find(({ url }) => url === currentPathname);
+}
+
+function loadMFEByPathname() {
+  const currentRoute = getCurrentRoute();
+
+  if (currentRoute) {
+    $targetMf.src = currentRoute.source;
+  }
+}
